@@ -11,6 +11,7 @@ import {
   getHomeDir,
   getEOL,
 } from "./systemInfo/systemInfo.js";
+import { calculateHash } from './hash/calcHash.js';
 
 const init = () => {
   const userName = parseArg(ARGS.userName)
@@ -59,6 +60,11 @@ const init = () => {
       if (data.includes(ARGS.EOL)) {
         process.stdout.write(`\n${getEOL()}\n`);
       }
+    }
+
+    if (command === "hash") {
+      const parsedLine = data.split(" ");
+      calculateHash(parsedLine[1]);
     }
 
     if (command === "compress") {
