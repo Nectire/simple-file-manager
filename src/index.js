@@ -2,6 +2,8 @@ import { createInterface } from 'readline';
 import { setDir, getDir } from './directoryPaths.js';
 import { parseArg, parseCommand } from './utils.js';
 import { ARGS } from './constants.js';
+import { compress } from '../../rss-nodejs-tasks/src/compression/compress.js';
+import { decompress } from '../../rss-nodejs-tasks/src/compression/decompress.js';
 
 const init = () => {
   const userName = parseArg(ARGS.userName)
@@ -28,6 +30,16 @@ const init = () => {
 
     if (command === ".exit") {
       closeReadlineStream(rl);
+    }
+
+    if (command === "compress") {
+      const parsedLine = data.split(" ");
+      await compress(parsedLine[1], parsedLine[2]);
+    }
+
+    if (command === "decompress") {
+      const parsedLine = data.split(" ");
+      await decompress(parsedLine[1], parsedLine[2]);
     }
 
     process.stdout.write(`\nYou are currently in ${getDir()}\n`);
