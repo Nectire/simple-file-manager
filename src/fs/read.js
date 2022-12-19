@@ -12,7 +12,7 @@ export const read = async (path) => {
     if (!existsSync(readPath)) {
       throw new OperationError();
     }
-    const rs = createReadStream(readPath);
+    const rs = createReadStream(readPath, {encoding: "utf-8"});
     rs.on('data', (data) => {
       console.log(data);
     });
