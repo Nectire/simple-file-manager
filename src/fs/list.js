@@ -14,8 +14,7 @@ export const list = async () => {
 
     const files = await readdir(pathTofiles)
       .catch(err =>{ throw new OperationError()});
-
-    console.log(files);
+    console.table(files);
   } catch (error) {
     console.error(error);
   }
