@@ -41,91 +41,106 @@ const init = () => {
   rl.on('line', async (data) => {
     const command = parseCommand(data);
 
-    if (command === ".exit") {
-      closeReadlineStream(rl);
-    }
-
-    if (command === "ls") {
-      await list();
-    }
-
-    if (command === "up") {
-      setDir("../");
-    }
-
-    if (command === "cd") {
-      const parsedLine = data.split(" ");
-      setDir(parsedLine[1]);
-    }
-
-    // fs
-    if (command === "add") {
-      const parsedLine = data.split(" ");
-      await create(parsedLine[1]);
-    }
-
-    if (command === "cp") {
-      const parsedLine = data.split(" ");
-      await copy(parsedLine[1], parsedLine[2]);
-    }
-
-    if (command === "mv") {
-      const parsedLine = data.split(" ");
-      await move(parsedLine[1], parsedLine[2]);
-    }
-
-    if (command === "cat") {
-      const parsedLine = data.split(" ");
-      await read(parsedLine[1]);
-    }
-
-    if (command === "rm") {
-      const parsedLine = data.split(" ");
-      await remove(parsedLine[1]);
-    }
-
-    if (command == "rn") {
-      const parsedLine = data.split(" ");
-      await rename(parsedLine[1], parsedLine[2]);
-    }
-
-    if (command === "os") {
-      if (data.includes(ARGS.cpus)) {
-        process.stdout.write(`\n${getCpus()}\n`);
+    switch (command) {
+      case ".exit": {
+        closeReadlineStream(rl);
+        break;
       }
 
-      if (data.includes(ARGS.userName)) {
-        process.stdout.write(`\n${getSysUserName()}\n`);
+      case "ls": {
+        await list();
+        break;
       }
 
-      if (data.includes(ARGS.arch)) {
-        process.stdout.write(`\n${getArchitecture()}\n`);
+      case "up": {
+        setDir("../");
+        break;
       }
 
-      if (data.includes(ARGS.homeDir)) {
-        process.stdout.write(`\n${getHomeDir()}\n`);
+      case "cd": {
+        const parsedLine = data.split(" ");
+        setDir(parsedLine[1]);
+        break;
       }
 
-      if (data.includes(ARGS.EOL)) {
-        process.stdout.write(`\n${getEOL()}\n`);
+      case "add": {
+        const parsedLine = data.split(" ");
+        await create(parsedLine[1]);
+        break;
       }
-    }
 
-    if (command === "hash") {
-      const parsedLine = data.split(" ");
-      calculateHash(parsedLine[1]);
-    }
+      case "cp": {
+        const parsedLine = data.split(" ");
+        await copy(parsedLine[1], parsedLine[2]);
+        break;
+      }
 
-    if (command === "compress") {
-      const parsedLine = data.split(" ");
-      await compress(parsedLine[1], parsedLine[2]);
-    }
+      case "mv": {
+        const parsedLine = data.split(" ");
+        await move(parsedLine[1], parsedLine[2]);
+        break;
+      }
 
-    if (command === "decompress") {
-      const parsedLine = data.split(" ");
-      await decompress(parsedLine[1], parsedLine[2]);
-    }
+      case "cat": {
+        const parsedLine = data.split(" ");
+        await read(parsedLine[1]);
+        break;
+      }
 
+      case "rm": {
+        const parsedLine = data.split(" ");
+        await remove(parsedLine[1]);
+        break;
+      }
+
+      case "rn": {
+        const parsedLine = data.split(" ");
+        await rename(parsedLine[1], parsedLine[2]);
+        break;
+      }
+
+      case "os": {
+        if (data.includes(ARGS.cpus)) {
+          process.stdout.write(`\n${getCpus()}\n`);
+        }
+
+        if (data.includes(ARGS.userName)) {
+          process.stdout.write(`\n${getSysUserName()}\n`);
+        }
+
+        if (data.includes(ARGS.arch)) {
+          process.stdout.write(`\n${getArchitecture()}\n`);
+        }
+
+        if (data.includes(ARGS.homeDir)) {
+          process.stdout.write(`\n${getHomeDir()}\n`);
+        }
+
+        if (data.includes(ARGS.EOL)) {
+          process.stdout.write(`\n${getEOL()}\n`);
+        }
+        break;
+      }
+
+      case "hash": {
+        const parsedLine = data.split(" ");
+        calculateHash(parsedLine[1]);
+        break;
+      }
+
+      case "compress": {
+        const parsedLine = data.split(" ");
+        await compress(parsedLine[1], parsedLine[2]);
+        break;
+      }
+
+      case "decompress": {
+        const parsedLine = data.split(" ");
+        await decompress(parsedLine[1], parsedLine[2]);
+        break;
+      }
+
+    }
     process.stdout.write(`\nYou are currently in ${getDir()}\n`);
   });
 }
